@@ -6,7 +6,7 @@ RUN dotnet tool install --global dotnet-sonarscanner && \
 
 RUN dotnet sonarscanner begin \
     /n:"Org: my_project" \
-    /v:"version" \
+    /v:"version_id" \
     /k:"project:my_project" \
     /d:sonar.host.url="http://localhost:9000" \
     /d:sonar.login="token" \
