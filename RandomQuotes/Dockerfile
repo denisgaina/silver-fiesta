@@ -2,7 +2,7 @@ FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build-env
 WORKDIR /app
 
 RUN dotnet tool install --global dotnet-sonarscanner && \
-    dotnet tool install --global coverlet.console
+    dotnet tool install --global coverlet.console --version 1.7.1
 
 RUN dotnet sonarscanner begin \
     /n:"Org: my_project" \
