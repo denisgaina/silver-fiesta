@@ -9,7 +9,7 @@ RUN dotnet sonarscanner begin \
     /n:"Org: my_project" \
     /v:"version_id" \
     /k:"project:my_project" \
-    /d:sonar.host.url="http://127.0.0.1:9000" \
+    /d:sonar.host.url="http://localhost:9000" \
     /d:sonar.login="token" \
     /d:sonar.cs.opencover.reportsPaths=coverage.opencover.xml
 
