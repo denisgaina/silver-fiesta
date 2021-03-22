@@ -22,8 +22,8 @@ RUN dotnet restore
 COPY . ./
 RUN dotnet publish -c Release -o out
 
-#RUN coverlet RandomQuotes.Tests/bin/Release/netcoreapp3.1/RandomQuotes.Tests.dll \
-    #--target "dotnet" --targetargs "test -c Release --no-build" --format opencover
+RUN coverlet RandomQuotes.Tests/bin/Release/netcoreapp3.1/RandomQuotes.Tests.dll \
+    --target "dotnet" --targetargs "test -c Release --no-build" --format opencover
 
 RUN dotnet sonarscanner end /d:sonar.login="token"
 
