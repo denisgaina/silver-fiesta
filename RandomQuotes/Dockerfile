@@ -15,14 +15,14 @@ RUN dotnet sonarscanner begin \
     /d:sonar.cs.opencover.reportsPaths=coverage.opencover.xml
 
 # Copy csproj and restore as distinct layers
-COPY *.csproj ./
-RUN dotnet restore
+#COPY RandomQuotes/*.csproj ./
+#RUN dotnet restore
 
 # Copy everything else and build
-COPY . ./
-RUN dotnet publish -c Release -o out
+COPY . /app
+RUN dotnet publish -c Release -o out RandomQuotes/RandomQuotes.csproj
 
-RUN coverlet ../RandomQuotes.Tests/bin/Release/netcoreapp3.1/RandomQuotes.Tests.dll \
+RUN coverlet RandomQuotes.Tests/bin/Release/netcoreapp3.1/RandomQuotes.Tests.dll \
     --target "dotnet" --targetargs "test -c Release --no-build" --format opencover
 
 RUN dotnet sonarscanner end /d:sonar.login="token"
