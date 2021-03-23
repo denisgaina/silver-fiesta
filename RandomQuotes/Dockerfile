@@ -20,6 +20,8 @@ RUN dotnet sonarscanner begin \
 
 # Copy everything else and build
 COPY . /app
+RUN dotnet restore -v m 
+RUN dotnet build --no-restore -c Release --nologo
 RUN dotnet publish -c Release -o out RandomQuotes/RandomQuotes.csproj
 
 RUN coverlet RandomQuotes.Tests/bin/Release/netcoreapp3.1/RandomQuotes.Tests.dll \
@@ -28,8 +30,8 @@ RUN coverlet RandomQuotes.Tests/bin/Release/netcoreapp3.1/RandomQuotes.Tests.dll
 RUN dotnet sonarscanner end /d:sonar.login="token"
 
 # Build runtime image
-# FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
-# WORKDIR /app
-# COPY --from=build-env /app/out .
-# ENTRYPOINT ["dotnet", "RandomQuotes.dll"]
-# EXPOSE 80
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
+WORKDIR /app
+COPY --from=build-env /app/out .
+ENTRYPOINT ["dotnet", "RandomQuotes.dll"]
+EXPOSE 80
