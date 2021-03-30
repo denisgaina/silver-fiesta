@@ -21,9 +21,9 @@ RUN apt-get update && apt-get install -y inetutils-traceroute
 
 # # Copy everything else and build
  COPY . /app
-# RUN dotnet restore -v m 
-# RUN dotnet build --no-restore -c Release --nologo
-# RUN dotnet publish -c Release -o out RandomQuotes/RandomQuotes.csproj
+ RUN dotnet restore -v m 
+ RUN dotnet build --no-restore -c Release --nologo
+ RUN dotnet publish -c Release -o out RandomQuotes/RandomQuotes.csproj
 
 # RUN coverlet RandomQuotes.Tests/bin/Release/netcoreapp3.1/RandomQuotes.Tests.dll \
 #     --target "dotnet" --targetargs "test -c Release --no-build" --format opencover
@@ -33,6 +33,6 @@ RUN apt-get update && apt-get install -y inetutils-traceroute
  # Build runtime image
  FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
  WORKDIR /app
- COPY --from=build-env /app/out .
+ COPY --from=build-env /app .
  ENTRYPOINT ["dotnet", "RandomQuotes.dll"]
  EXPOSE 80
