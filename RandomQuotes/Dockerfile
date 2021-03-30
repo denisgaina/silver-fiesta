@@ -20,7 +20,7 @@ RUN apt-get update && apt-get install -y inetutils-traceroute
 # #RUN dotnet restore
 
 # # Copy everything else and build
-# COPY . /app
+ COPY . /app
 # RUN dotnet restore -v m 
 # RUN dotnet build --no-restore -c Release --nologo
 # RUN dotnet publish -c Release -o out RandomQuotes/RandomQuotes.csproj
@@ -30,9 +30,9 @@ RUN apt-get update && apt-get install -y inetutils-traceroute
 
 # RUN dotnet sonarscanner end /d:sonar.login="token"
 
-# # Build runtime image
-# FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
-# WORKDIR /app
-# COPY --from=build-env /app/out .
-# ENTRYPOINT ["dotnet", "RandomQuotes.dll"]
-# EXPOSE 80
+ # Build runtime image
+ FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
+ WORKDIR /app
+ COPY --from=build-env /app/out .
+ ENTRYPOINT ["dotnet", "RandomQuotes.dll"]
+ EXPOSE 80
