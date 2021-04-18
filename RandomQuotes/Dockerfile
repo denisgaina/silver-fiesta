@@ -20,7 +20,11 @@ RUN dotnet sonarscanner begin \
 
 # Copy everything else and build
 COPY . /app
+# -v m 
+# Sets the verbosity level of the command. Allowed values are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic]. Default value is minimal.
 RUN dotnet restore -v m 
+# --nologo
+# Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK.
 RUN dotnet build --no-restore -c Release --nologo
 RUN dotnet publish -c Release -o out RandomQuotes/RandomQuotes.csproj
 
@@ -28,6 +32,8 @@ RUN coverlet RandomQuotes.Tests/bin/Release/netcoreapp3.1/RandomQuotes.Tests.dll
     --target "dotnet" --targetargs "test -c Release --no-build" --format opencover
 
 RUN dotnet sonarscanner end /d:sonar.login="token"
+
+
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
